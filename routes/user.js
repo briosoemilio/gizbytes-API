@@ -31,7 +31,7 @@ router.get("/:userId", auth.verify, (req,res) => {
 })
 
 // Set admin
-router.post("/:userId/setadmin/", auth.verify, (req, res) => {
+router.put("/:userId/setadmin/", auth.verify, (req, res) => {
 	let isAdmin = auth.decode(req.headers.authorization).isAdmin
 	
 	userController.getUser(req.params).then(resultFromController => {

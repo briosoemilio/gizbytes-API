@@ -38,67 +38,106 @@ module.exports.addToCart = async (data) => {
 
 // Get cart
 
-module.exports.getCart = (data) => {
+module.exports.getCart = async (data) => {
 	let loggedUser = auth.decode(data.headers.authorization).email
 	
-	let totalAmount = Order.aggregate([
-		{$match: {}},
+	let orderList = []
+
+	let totalAmount = await Order.aggregate([
+		{$match: {purchasedBy: loggedUser}},
+	]).then ((orders) => {
+		orders.forEach((order) => {
+			orderList.push(order)
+		})
+	})
+
+	return orderList
+
+	/*let totalAmount = await Order.aggregate([
+		{$match: {purchasedBy: loggedUser}},
 		{$group: {_id: loggedUser, total:{$sum: "$totalAmount"}}}
 	])
 
-	return totalAmount
+	return totalAmount*/
 }
 
 // Check out Cart
 module.exports.checkOut = async (data) => {
+	
 	let loggedUser = auth.decode(data.headers.authorization).email
 
-	// Make order isPaid to true
-	let paidified = {
-		isPaid: true
-	}
-	let isOrderPaid = await Order.find({purchasedBy: loggedUser}).updateMany(paidified).then((order, error) => {
-		if (error) {
-			return false
-		} else {
-			return true
-		}
-	})
-
-	// Check if product stocks is greater than order quantity
-	// Subtract order quantity to product stocks
 	let isStockSubtracted = await Order.aggregate([
 			{$match: {purchasedBy: loggedUser}}
-		]).then((orders, error) => {
+		]).then((orders => {
 			orders.forEach((order) => {
 				let productId = order.productId
 				let quantity = order.quantity
 				let orderId = order._id
-
+				let isPaid = order.isPaid
+				
 				Product.findById(productId).then((products => {
-					if (products.stocks > quantity) {
+					// Check if product stocks is gte order quantity
+					if (products.stocks >= quantity) {
+
+						// Make order isPaid to true
+						let paidified = {
+							isPaid: true
+						}
+						Order.findByIdAndUpdate(orderId, paidified).then((order, error) => {
+							if (error) {
+								return false
+							} else {
+								return true
+							}
+						})
+
+						// Subtract order quantity to product stocks
 						let updatedStocks = {
 							stocks: products.stocks - quantity
 						}
-						Product.findByIdAndUpdate(productId, updatedStocks)
+
+						Product.findByIdAndUpdate(productId, updatedStocks).then((updateProduct, err) => {
+							if (err) {
+								return false
+							} else {
+								return true
+							}
+						})
+
+						console.log(`Success you have bought ${quantity} pcs of product: ${productId}`)
 						return true
 					} else {
+						console.log(`Error: no more stocks for product: ${productId}`)
 						return false
 					}
 				}))
 			})
-			if (error) {
-				return false
-			} else {
-				return true
-			}
-		})
+		}))		
+}
 
-		console.log(isStockSubtracted)
+//Retrieve all Orders
+module.exports.getAllOrders = (data) => {
+	let allOrders = Order.aggregate([
+			{$match: {}}
+		])
 
-		if (isStockSubtracted && isOrderPaid) {
-			return true
-		} else {
-			return false
-		}
+	return allOrders
+}
+
+//Retrieve paid orders
+module.exports.getAllPaidOrders = (data) => {
+	let allPaidOrders = Order.aggregate([
+			{$match: {isPaid:true}}
+		])
+
+	return allPaidOrders
+}
+
+//Retrieve pending orders
+module.exports.getAllPendingOrders = (data) => {
+	let allPendingOrders = Order.aggregate([
+			{$match: {isPaid:false}}
+		])
+
+	return allPendingOrders
 }
