@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"reguser2@mail.com\",\r\n\t\"password\": \"12345\",\r\n\t\"firstName\": \"Regular\",\r\n\t\"lastName\": \"Elmo\",\r\n\t\"mobileNo\": \"09212632263\"\r\n}",
+					"raw": "{\r\n    \"email\": \"customer2@mail.com\",\r\n\t\"password\": \"customer123\",\r\n\t\"firstName\": \"Admin\",\r\n\t\"lastName\": \"Elmo\",\r\n\t\"mobileNo\": \"09212632263\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -44,7 +44,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"adminuser1@mail.com\",\r\n    \"password\":\"12345\"\r\n}",
+					"raw": "{\r\n    \"email\": \"customer2@mail.com\",\r\n    \"password\":\"customer123\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -69,6 +69,16 @@
 		{
 			"name": "GET ALL USERS",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODllNjJlM2U4YmY2NDFkYzQ0YTFhNyIsImVtYWlsIjoiY3VzdG9tZXJAbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjM2NDM3NjgyfQ.up-JfMVX6KRfH7DKYdAg7wtZ7dGPLZ0G2Y0hFKzzBVc",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -94,7 +104,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODdjYWU2NjE5ZTJlYTRmYTQ5NmQ2MyIsImVtYWlsIjoiYWRtaW51c2VyMUBtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYzNjM2MTc1OX0.rq8Ch8gxSL2K0cdnRS3t5U3jzsvh5aalEGJ-u3DGtLE",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODllNjM5M2U4YmY2NDFkYzQ0YTFhYSIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjM2NDI3MzM0fQ.tcvIIigeAC7AyGp140Kn5UBQ0rKBN8L2kYpRA42fcFA",
 							"type": "string"
 						}
 					]
@@ -102,7 +112,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/users/6187cae6619e2ea4fa496d63",
+					"raw": "http://localhost:4000/users/6189e62e3e8bf641dc44a1a7",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -110,7 +120,7 @@
 					"port": "4000",
 					"path": [
 						"users",
-						"6187cae6619e2ea4fa496d63"
+						"6189e62e3e8bf641dc44a1a7"
 					]
 				}
 			},
@@ -124,15 +134,15 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODdjYWU2NjE5ZTJlYTRmYTQ5NmQ2MyIsImVtYWlsIjoiYWRtaW51c2VyMUBtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYzNjM2MTc1OX0.rq8Ch8gxSL2K0cdnRS3t5U3jzsvh5aalEGJ-u3DGtLE",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODllNjM5M2U4YmY2NDFkYzQ0YTFhYSIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MzY0Mjc0NzR9.RygRcyHMwbtwV1Y7pPR4d2LFroCmSMuPVRBwGDExCEo",
 							"type": "string"
 						}
 					]
 				},
-				"method": "POST",
+				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/users/6188e54244c4c50237cff274/setadmin",
+					"raw": "http://localhost:4000/users/6189e6a93e8bf641dc44a1b2/setadmin",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -140,7 +150,7 @@
 					"port": "4000",
 					"path": [
 						"users",
-						"6188e54244c4c50237cff274",
+						"6189e6a93e8bf641dc44a1b2",
 						"setadmin"
 					]
 				}
@@ -155,7 +165,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODdjYWU2NjE5ZTJlYTRmYTQ5NmQ2MyIsImVtYWlsIjoiYWRtaW51c2VyMUBtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYzNjM2NDE2NX0.wQF5W1DGx3e8VPYH-Qj5rh-o7DuYdiHicar24sJVLRk",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODllNjM5M2U4YmY2NDFkYzQ0YTFhYSIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MzY0Mzc3Mjh9.svSdIGqDmowuS80TzuleAmZpcwiWBrxfwme0Zw2Jguc",
 							"type": "string"
 						}
 					]
@@ -164,7 +174,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"productName\": \"Product2\",\r\n\t\"description\": \"Product 2 Description\",\r\n\t\"price\": 10000,\r\n\t\"stocks\": 50\r\n}",
+					"raw": "{\r\n    \"productName\": \"Product3\",\r\n\t\"description\": \"Product 3 Description\",\r\n\t\"price\": 1100,\r\n\t\"stocks\": 70\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -194,7 +204,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODdjYWU2NjE5ZTJlYTRmYTQ5NmQ2MyIsImVtYWlsIjoiYWRtaW51c2VyMUBtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYzNjM2MTc1OX0.rq8Ch8gxSL2K0cdnRS3t5U3jzsvh5aalEGJ-u3DGtLE",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODllNjJlM2U4YmY2NDFkYzQ0YTFhNyIsImVtYWlsIjoiY3VzdG9tZXJAbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjM2NDM3ODc5fQ.tz8LAZ8drTroD_PBs2lWhDD8Q33F9tGDTyT17HaotIk",
 							"type": "string"
 						}
 					]
@@ -224,7 +234,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODdjYWU2NjE5ZTJlYTRmYTQ5NmQ2MyIsImVtYWlsIjoiYWRtaW51c2VyMUBtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYzNjM2MTc1OX0.rq8Ch8gxSL2K0cdnRS3t5U3jzsvh5aalEGJ-u3DGtLE",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODllNjM5M2U4YmY2NDFkYzQ0YTFhYSIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MzY0Mjc0NzR9.RygRcyHMwbtwV1Y7pPR4d2LFroCmSMuPVRBwGDExCEo",
 							"type": "string"
 						}
 					]
@@ -232,7 +242,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/products/6187cb80619e2ea4fa496d78",
+					"raw": "http://localhost:4000/products/6189e7073e8bf641dc44a1c0",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -240,7 +250,7 @@
 					"port": "4000",
 					"path": [
 						"products",
-						"6187cb80619e2ea4fa496d78"
+						"6189e7073e8bf641dc44a1c0"
 					]
 				}
 			},
@@ -254,7 +264,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODdjYWU2NjE5ZTJlYTRmYTQ5NmQ2MyIsImVtYWlsIjoiYWRtaW51c2VyMUBtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYzNjM2MTc1OX0.rq8Ch8gxSL2K0cdnRS3t5U3jzsvh5aalEGJ-u3DGtLE",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODllNjM5M2U4YmY2NDFkYzQ0YTFhYSIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MzY0Mjc0NzR9.RygRcyHMwbtwV1Y7pPR4d2LFroCmSMuPVRBwGDExCEo",
 							"type": "string"
 						}
 					]
@@ -263,7 +273,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"productName\" : \"Updated product1\",\r\n    \"description\" : \"Updated description1\"\r\n}",
+					"raw": "{\r\n    \"productName\" : \"Updated product2\",\r\n    \"description\" : \"Updated description2\",\r\n    \"price\" : 1500,\r\n    \"stocks\": 70\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -271,7 +281,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/products/6187cb80619e2ea4fa496d78/update",
+					"raw": "http://localhost:4000/products/6189e6f63e8bf641dc44a1bb/update",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -279,7 +289,7 @@
 					"port": "4000",
 					"path": [
 						"products",
-						"6187cb80619e2ea4fa496d78",
+						"6189e6f63e8bf641dc44a1bb",
 						"update"
 					]
 				}
@@ -302,7 +312,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/products/6187cb80619e2ea4fa496d78/archive",
+					"raw": "http://localhost:4000/products/6189e941c9016c3f581550ef/archive",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -310,7 +320,7 @@
 					"port": "4000",
 					"path": [
 						"products",
-						"6187cb80619e2ea4fa496d78",
+						"6189e941c9016c3f581550ef",
 						"archive"
 					]
 				}
@@ -325,7 +335,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODkyZWU1NTA4MmM5ZDgxNTcxNzZkMyIsImVtYWlsIjoicmVndXNlcjFAbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjM2MzgwMzk3fQ.WnfzJREbc3BRCgST3pn4AlHp5j6SdpW5sblWtP5lpxg",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOGExM2IyYjJhNWJlMmExOGVlOGRjOSIsImVtYWlsIjoiY3VzdG9tZXIyQG1haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzNjQzODk2OH0.QkaTWuSO87x-Ns-5VEWVx40M20WJe1sfx4U7fbpRVnE",
 							"type": "string"
 						}
 					]
@@ -334,7 +344,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"quantity\": 2\r\n}",
+					"raw": "{\r\n    \"quantity\": 3\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -342,7 +352,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/orders/6188efd743d9cf77ecfc2dbc/addtocart",
+					"raw": "http://localhost:4000/orders/6189e7073e8bf641dc44a1c0/addtocart",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -350,7 +360,7 @@
 					"port": "4000",
 					"path": [
 						"orders",
-						"6188efd743d9cf77ecfc2dbc",
+						"6189e7073e8bf641dc44a1c0",
 						"addtocart"
 					]
 				}
@@ -360,6 +370,16 @@
 		{
 			"name": "ACCESS CART",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOGExM2IyYjJhNWJlMmExOGVlOGRjOSIsImVtYWlsIjoiY3VzdG9tZXIyQG1haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzNjQzODk2OH0.QkaTWuSO87x-Ns-5VEWVx40M20WJe1sfx4U7fbpRVnE",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -374,6 +394,46 @@
 						"myOrders"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "CHECKOUT CART",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOGExM2IyYjJhNWJlMmExOGVlOGRjOSIsImVtYWlsIjoiY3VzdG9tZXIyQG1haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzNjQzODk2OH0.QkaTWuSO87x-Ns-5VEWVx40M20WJe1sfx4U7fbpRVnE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/orders/myOrders/checkOut",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"orders",
+						"myOrders",
+						"checkOut"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET ORDERS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
 			},
 			"response": []
 		}
