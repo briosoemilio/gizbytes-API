@@ -10,7 +10,7 @@ router.post("/register", (req,res) => {
 		if (checkRegister) {
 			res.send(`You have already created an account on this email ${req.body.email}. Click here to log in.`)
 		} else {
-		userController.registerUser(req.body).then(resultFromController => res.send(`Successfully registered user: ${req.body.email}.`))
+			userController.registerUser(req.body).then(resultFromController => res.send(`Successfully registered user: ${req.body.email}.`))
 		}
 	})
 })
@@ -21,8 +21,15 @@ router.get("/login", (req, res) => {
 })
 
 // get all users
-router.get("/all", (req,res) => {
-	userController.getAllUsers().then(resultFromController => res.send(resultFromController))
+router.get("/all", auth.verify, (req,res) => {
+
+	let isAdmin = auth.decode(req.headers.authorization).isAdmin
+
+	if (isAdmin) {
+		userController.getAllUsers().then(resultFromController => res.send(resultFromController))
+	} else {
+		res.send(`Please use Admin user only.`)
+	}
 });
 
 // Get specific user

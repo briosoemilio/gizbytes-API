@@ -104,10 +104,10 @@ module.exports.checkOut = async (data) => {
 							}
 						})
 
-						console.log(`Success you have bought ${quantity} pcs of product: ${productId}`)
+						res.send(`Success you have bought ${quantity} pcs of product: ${productId}`)
 						return true
 					} else {
-						console.log(`Error: no more stocks for product: ${productId}`)
+						res.send(`Error: no more stocks for product: ${productId}`)
 						return false
 					}
 				}))

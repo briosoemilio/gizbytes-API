@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"customer2@mail.com\",\r\n\t\"password\": \"customer123\",\r\n\t\"firstName\": \"Admin\",\r\n\t\"lastName\": \"Elmo\",\r\n\t\"mobileNo\": \"09212632263\"\r\n}",
+					"raw": "{\r\n    \"email\": \"customer@mail.com\",\r\n\t\"password\": \"12345\",\r\n\t\"firstName\": \"Admin\",\r\n\t\"lastName\": \"User\",\r\n\t\"mobileNo\": \"09999999999\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,12 +20,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/users/register",
-					"protocol": "http",
+					"raw": "https://fathomless-beyond-35679.herokuapp.com/users/register",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"fathomless-beyond-35679",
+						"herokuapp",
+						"com"
 					],
-					"port": "4000",
 					"path": [
 						"users",
 						"register"
@@ -44,7 +45,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"customer2@mail.com\",\r\n    \"password\":\"customer123\"\r\n}",
+					"raw": "{\r\n    \"email\": \"admin@mail.com\",\r\n    \"password\":\"12345\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -52,12 +53,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/users/login",
-					"protocol": "http",
+					"raw": "https://fathomless-beyond-35679.herokuapp.com/users/login",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"fathomless-beyond-35679",
+						"herokuapp",
+						"com"
 					],
-					"port": "4000",
 					"path": [
 						"users",
 						"login"
@@ -67,14 +69,14 @@
 			"response": []
 		},
 		{
-			"name": "GET ALL USERS",
+			"name": "GET ALL USERS (A)",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODllNjJlM2U4YmY2NDFkYzQ0YTFhNyIsImVtYWlsIjoiY3VzdG9tZXJAbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjM2NDM3NjgyfQ.up-JfMVX6KRfH7DKYdAg7wtZ7dGPLZ0G2Y0hFKzzBVc",
+							"value": "",
 							"type": "string"
 						}
 					]
@@ -82,12 +84,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/users/all",
-					"protocol": "http",
+					"raw": "https://fathomless-beyond-35679.herokuapp.com/users/all",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"fathomless-beyond-35679",
+						"herokuapp",
+						"com"
 					],
-					"port": "4000",
 					"path": [
 						"users",
 						"all"
@@ -104,7 +107,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODllNjM5M2U4YmY2NDFkYzQ0YTFhYSIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjM2NDI3MzM0fQ.tcvIIigeAC7AyGp140Kn5UBQ0rKBN8L2kYpRA42fcFA",
+							"value": "",
 							"type": "string"
 						}
 					]
@@ -112,29 +115,30 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/users/6189e62e3e8bf641dc44a1a7",
-					"protocol": "http",
+					"raw": "https://fathomless-beyond-35679.herokuapp.com/users/618d103cbff831002382107a",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"fathomless-beyond-35679",
+						"herokuapp",
+						"com"
 					],
-					"port": "4000",
 					"path": [
 						"users",
-						"6189e62e3e8bf641dc44a1a7"
+						"618d103cbff831002382107a"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "SET USER AS ADMIN",
+			"name": "SET USER AS ADMIN (A)",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODllNjM5M2U4YmY2NDFkYzQ0YTFhYSIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MzY0Mjc0NzR9.RygRcyHMwbtwV1Y7pPR4d2LFroCmSMuPVRBwGDExCEo",
+							"value": "",
 							"type": "string"
 						}
 					]
@@ -142,15 +146,16 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/users/6189e6a93e8bf641dc44a1b2/setadmin",
-					"protocol": "http",
+					"raw": "https://fathomless-beyond-35679.herokuapp.com/users/618d103cbff831002382107a/setadmin",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"fathomless-beyond-35679",
+						"herokuapp",
+						"com"
 					],
-					"port": "4000",
 					"path": [
 						"users",
-						"6189e6a93e8bf641dc44a1b2",
+						"618d103cbff831002382107a",
 						"setadmin"
 					]
 				}
@@ -158,14 +163,14 @@
 			"response": []
 		},
 		{
-			"name": "CREATE PRODUCT",
+			"name": "CREATE PRODUCT (A)",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODllNjM5M2U4YmY2NDFkYzQ0YTFhYSIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MzY0Mzc3Mjh9.svSdIGqDmowuS80TzuleAmZpcwiWBrxfwme0Zw2Jguc",
+							"value": "",
 							"type": "string"
 						}
 					]
@@ -174,7 +179,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"productName\": \"Product3\",\r\n\t\"description\": \"Product 3 Description\",\r\n\t\"price\": 1100,\r\n\t\"stocks\": 70\r\n}",
+					"raw": "{\r\n    \"productName\": \"\",\r\n\t\"description\": \"\",\r\n\t\"price\": ,\r\n\t\"stocks\": \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -182,12 +187,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/products/add",
-					"protocol": "http",
+					"raw": "https://fathomless-beyond-35679.herokuapp.com/products/add",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"fathomless-beyond-35679",
+						"herokuapp",
+						"com"
 					],
-					"port": "4000",
 					"path": [
 						"products",
 						"add"
@@ -204,7 +210,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODllNjJlM2U4YmY2NDFkYzQ0YTFhNyIsImVtYWlsIjoiY3VzdG9tZXJAbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjM2NDM3ODc5fQ.tz8LAZ8drTroD_PBs2lWhDD8Q33F9tGDTyT17HaotIk",
+							"value": "",
 							"type": "string"
 						}
 					]
@@ -212,12 +218,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/products/all",
-					"protocol": "http",
+					"raw": "https://fathomless-beyond-35679.herokuapp.com/products/all",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"fathomless-beyond-35679",
+						"herokuapp",
+						"com"
 					],
-					"port": "4000",
 					"path": [
 						"products",
 						"all"
@@ -234,7 +241,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODllNjM5M2U4YmY2NDFkYzQ0YTFhYSIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MzY0Mjc0NzR9.RygRcyHMwbtwV1Y7pPR4d2LFroCmSMuPVRBwGDExCEo",
+							"value": "",
 							"type": "string"
 						}
 					]
@@ -242,29 +249,30 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/products/6189e7073e8bf641dc44a1c0",
-					"protocol": "http",
+					"raw": "https://fathomless-beyond-35679.herokuapp.com/products/618d11cabff8310023821087",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"fathomless-beyond-35679",
+						"herokuapp",
+						"com"
 					],
-					"port": "4000",
 					"path": [
 						"products",
-						"6189e7073e8bf641dc44a1c0"
+						"618d11cabff8310023821087"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "UPDATE PRODUCT",
+			"name": "UPDATE PRODUCT (A)",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODllNjM5M2U4YmY2NDFkYzQ0YTFhYSIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MzY0Mjc0NzR9.RygRcyHMwbtwV1Y7pPR4d2LFroCmSMuPVRBwGDExCEo",
+							"value": "",
 							"type": "string"
 						}
 					]
@@ -273,7 +281,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"productName\" : \"Updated product2\",\r\n    \"description\" : \"Updated description2\",\r\n    \"price\" : 1500,\r\n    \"stocks\": 70\r\n}",
+					"raw": "{\r\n    \"productName\" : \"\",\r\n    \"description\" : \"\",\r\n    \"price\" : ,\r\n    \"stocks\": \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -281,15 +289,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/products/6189e6f63e8bf641dc44a1bb/update",
-					"protocol": "http",
+					"raw": "https://fathomless-beyond-35679.herokuapp.com/products/618d11cabff8310023821087/update",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"fathomless-beyond-35679",
+						"herokuapp",
+						"com"
 					],
-					"port": "4000",
 					"path": [
 						"products",
-						"6189e6f63e8bf641dc44a1bb",
+						"618d11cabff8310023821087",
 						"update"
 					]
 				}
@@ -297,14 +306,14 @@
 			"response": []
 		},
 		{
-			"name": "ARCHIVE PRODUCT",
+			"name": "ARCHIVE PRODUCT (A)",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODdjYWU2NjE5ZTJlYTRmYTQ5NmQ2MyIsImVtYWlsIjoiYWRtaW51c2VyMUBtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYzNjM2MTc1OX0.rq8Ch8gxSL2K0cdnRS3t5U3jzsvh5aalEGJ-u3DGtLE",
+							"value": "",
 							"type": "string"
 						}
 					]
@@ -312,15 +321,16 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/products/6189e941c9016c3f581550ef/archive",
-					"protocol": "http",
+					"raw": "https://fathomless-beyond-35679.herokuapp.com/products/618d12f8bff8310023821093/archive",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"fathomless-beyond-35679",
+						"herokuapp",
+						"com"
 					],
-					"port": "4000",
 					"path": [
 						"products",
-						"6189e941c9016c3f581550ef",
+						"618d12f8bff8310023821093",
 						"archive"
 					]
 				}
@@ -328,14 +338,14 @@
 			"response": []
 		},
 		{
-			"name": "ADD TO CART",
+			"name": "ADD TO CART (C)",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOGExM2IyYjJhNWJlMmExOGVlOGRjOSIsImVtYWlsIjoiY3VzdG9tZXIyQG1haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzNjQzODk2OH0.QkaTWuSO87x-Ns-5VEWVx40M20WJe1sfx4U7fbpRVnE",
+							"value": "",
 							"type": "string"
 						}
 					]
@@ -344,7 +354,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"quantity\": 3\r\n}",
+					"raw": "{\r\n    \"quantity\": \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -352,15 +362,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/orders/6189e7073e8bf641dc44a1c0/addtocart",
-					"protocol": "http",
+					"raw": "https://fathomless-beyond-35679.herokuapp.com/orders/618d11cabff8310023821087/addtocart",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"fathomless-beyond-35679",
+						"herokuapp",
+						"com"
 					],
-					"port": "4000",
 					"path": [
 						"orders",
-						"6189e7073e8bf641dc44a1c0",
+						"618d11cabff8310023821087",
 						"addtocart"
 					]
 				}
@@ -375,7 +386,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOGExM2IyYjJhNWJlMmExOGVlOGRjOSIsImVtYWlsIjoiY3VzdG9tZXIyQG1haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzNjQzODk2OH0.QkaTWuSO87x-Ns-5VEWVx40M20WJe1sfx4U7fbpRVnE",
+							"value": "",
 							"type": "string"
 						}
 					]
@@ -383,12 +394,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/orders/myOrders",
-					"protocol": "http",
+					"raw": "https://fathomless-beyond-35679.herokuapp.com/orders/myOrders",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"fathomless-beyond-35679",
+						"herokuapp",
+						"com"
 					],
-					"port": "4000",
 					"path": [
 						"orders",
 						"myOrders"
@@ -405,7 +417,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOGExM2IyYjJhNWJlMmExOGVlOGRjOSIsImVtYWlsIjoiY3VzdG9tZXIyQG1haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzNjQzODk2OH0.QkaTWuSO87x-Ns-5VEWVx40M20WJe1sfx4U7fbpRVnE",
+							"value": "",
 							"type": "string"
 						}
 					]
@@ -413,12 +425,13 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/orders/myOrders/checkOut",
-					"protocol": "http",
+					"raw": "https://fathomless-beyond-35679.herokuapp.com/orders/myOrders/checkOut",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"fathomless-beyond-35679",
+						"herokuapp",
+						"com"
 					],
-					"port": "4000",
 					"path": [
 						"orders",
 						"myOrders",
@@ -429,11 +442,34 @@
 			"response": []
 		},
 		{
-			"name": "GET ORDERS",
+			"name": "GET ORDERS (A)",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
-				"url": null
+				"url": {
+					"raw": "https://fathomless-beyond-35679.herokuapp.com/orders/allOrders/pending",
+					"protocol": "https",
+					"host": [
+						"fathomless-beyond-35679",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"orders",
+						"allOrders",
+						"pending"
+					]
+				}
 			},
 			"response": []
 		}
