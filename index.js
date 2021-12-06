@@ -16,7 +16,9 @@ app.use(cors());
 
 mongoose.connect("mongodb+srv://admin:8260560aw@zuittbootcamp.3f2rk.mongodb.net/e-commerce?retryWrites=true&w=majority" , {
 	useNewUrlParser: true,
-	useUnifiedTopology: true
+	useUnifiedTopology: true,
+	useFindAndModify: false,
+    useCreateIndex : true
 })
 
 let db = mongoose.connection;

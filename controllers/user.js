@@ -38,13 +38,13 @@ module.exports.registerUser = (reqBody) => {
 module.exports.loginUser = (reqBody) => {
 	return User.findOne({email: reqBody.email}).then(result => {
 		if (result == null) {
-			return (`Email not found. Please register email first.`)
+			return (false)
 		} else {
 			const isPwCorrect = bcrypt.compareSync(reqBody.password, result.password)
 			if (isPwCorrect) {
 				return {access: auth.createAccessToken(result)}
 			} else {
-				return (`Password incorrect. Please check again.`)
+				return (false)
 			}
 		}
 	})
@@ -57,7 +57,7 @@ module.exports.getAllUsers = (reqBody) => {
 
 // Get a specific user
 module.exports.getUser = (reqBody) => {
-	return User.findById({_id: reqBody.userId}, {password: 0})
+	return User.findById(reqBody.userId, {password: 0})
 }
 
 // Set user as admin
@@ -76,3 +76,11 @@ module.exports.setAdmin = (reqParams) => {
 	})
 }
 
+//Get token details
+module.exports.getProfile = (data) => {
+console.log(data)
+			return User.findById(data.userId).then(result => {				
+				result.password = "";				
+				return result;
+			});
+		};

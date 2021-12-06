@@ -2,20 +2,20 @@ const express = require("express");
 const router = express.Router();
 const productController = require("../controllers/product")
 const auth = require("../auth")
-
+const store = require('../multer')
 
 // Add a product
-router.post("/add", auth.verify, (req,res) => {
+/*router.post("/add", auth.verify, store.array('images, 12'), productController.uploads, (req,res) => {
 	let isAdmin = auth.decode(req.headers.authorization).isAdmin
 	let newProduct = req.body.productName
 
 	if (isAdmin) {
 		productController.createProduct(req);
-		res.send(`You have successfully created product: ${newProduct}`)
+		res.send(true)
 	} else {
-		res.send(`Only admins are allowed to create a product.`)
+		res.send(false)
 	}
-})
+})*/
 
 // Get all active products
 router.get("/all", auth.verify, (req,res) => {
@@ -49,5 +49,20 @@ router.post("/:productId/archive", auth.verify, (req,res) => {
 		res.send(`Only admins are allowed to archive a product.`)
 	}
 })
+
+//upload photo
+/*router.post("/upload", store.array('images, 12'), productController.uploads)*/
+
+//test upload
+router.post("/add", auth.verify, store.array('images', 12), (req,res) => {
+	let isAdmin = auth.decode(req.headers.authorization).isAdmin
+	
+	if (isAdmin) {
+		productController.createProduct(req).then(resultFromController => res.send(resultFromController))
+	} else {
+		res.send(false)
+	}
+})
+
 
 module.exports = router

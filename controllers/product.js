@@ -1,11 +1,13 @@
 const Product = require("../models/product")
+const UploadModel = require('../models/upload');
 const bcrypt = require("bcrypt")
 const auth = require("../auth")
 const User = require("../models/user")
+const fs = require('fs')
 
 
 // Add a product
-module.exports.createProduct = (req) => {
+/*module.exports.createProduct = (req) => {
 	let newProduct = new Product({
 		productName: req.body.productName,
 		description: req.body.description,
@@ -26,7 +28,7 @@ module.exports.createProduct = (req) => {
 			return true
 		}
 	})
-}
+}*/
 
 // Get all active products
 module.exports.getAllProduct = () => {
@@ -58,11 +60,59 @@ module.exports.archiveProduct = (req) => {
 		isActive: false
 	}
 	
-	return Product.findByIdAndUpdate(req.productId, archivify).then((course, error) => {
+	return Product.findByIdAndUpdate(req.productId, archivify).then((product, error) => {
 		if(error) {
 			return false
 		} else {
 			return true
 		}
 	})
+}
+
+// test upload
+module.exports.createProduct = async (req, res, next) => {
+	const files = req.files;
+	let message;
+	if(!files) {
+		const error = new Error('Please choose files');
+		error.httpStatusCode = 400;
+		return next(error)
+	}
+
+	let imgArray = await files.map((file) => {
+		let img = fs.readFileSync(file.path)
+		return encode_image = img.toString('base64')
+	})
+
+	let result = Promise.all(imgArray.map(async(src, index) => {
+		
+		let newProduct = new Product({
+			productName: req.body.productName,
+			description: req.body.description,
+			price: req.body.price,
+			stocks: req.body.stocks,
+			addedBy: auth.decode(req.headers.authorization).email,
+			filename: files[index].originalname,
+			contentType: files[index].mimetype,
+			imageBase64: src
+		})
+		
+		return newProduct.save().then(()=> {
+			message = true;
+			console.log(message)
+			return message
+		}).catch(error => {			
+			if(error.name === 'MongoError' && error.code === 11000) {
+				message = 'duplicate'
+				console.log(message)
+				return message
+			} else {
+				message = 'file not found'
+				console.log(message)
+				return message
+			}
+		})
+	}))	
+	await result
+	return result
 }
