@@ -15,6 +15,7 @@ module.exports.addToCart = async (data) => {
 	let productPrice = stringify.replace(/\D/g,"")
 
 	let newOrder = new Order({
+		productName:data.body.productName,
 		productId: data.params.productId,
 		price: productPrice,
 		quantity: data.body.quantity,
@@ -63,8 +64,10 @@ module.exports.getCart = async (data) => {
 
 // Check out Cart
 module.exports.checkOut = async (data) => {
+
+	return data;
 	
-	let loggedUser = auth.decode(data.headers.authorization).email
+	/*let loggedUser = auth.decode(data.headers.authorization).email
 
 	let isStockSubtracted = await Order.aggregate([
 			{$match: {purchasedBy: loggedUser}}
@@ -112,7 +115,7 @@ module.exports.checkOut = async (data) => {
 					}
 				}))
 			})
-		}))		
+		}))		*/
 }
 
 //Retrieve all Orders

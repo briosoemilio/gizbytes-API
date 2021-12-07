@@ -8,10 +8,10 @@ router.post("/:productId/addtocart", auth.verify, (req, res) => {
 	let isAdmin = auth.decode(req.headers.authorization).isAdmin
 
 	if (isAdmin) {
-		res.send(`User is Admin, cannot request an order. Please use non-admin account.`)
+		res.send(false)
 	} else {
 		orderController.addToCart(req)
-		res.send(`You have added this product to cart.`)
+		res.send(true)
 	}
 })
 
@@ -22,7 +22,7 @@ router.get("/myOrders", auth.verify, (req,res) => {
 	let isAdmin = auth.decode(req.headers.authorization).isAdmin
 
 	if (isAdmin) {
-		res.send(`User is Admin, Admin users do not have any orders. Please use non-admin account.`)
+		res.send(false)
 	} else {
 		/*orderController.getCart(req).then(resultFromController => res.send(resultFromController))*/
 		orderController.getCart(req).then(resultFromController => res.send(resultFromController))
@@ -38,9 +38,11 @@ router.post("/myOrders/checkOut", auth.verify, (req,res) => {
 	if (isAdmin) {
 		res.send(`User is Admin, Admin users do not have any orders. Please use non-admin account.`)
 	} else {
-
-		orderController.checkOut(req)
-		res.send(`Done executing command, please see console for more details.`)
+		let orders;
+		orderController.getCart(req).then(resultFromController =>{
+			orders = resultFromController
+			orderController.checkOut(orders).then(result => res.send result)
+		})
 	}
 })
 

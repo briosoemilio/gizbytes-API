@@ -18,12 +18,12 @@ const store = require('../multer')
 })*/
 
 // Get all active products
-router.get("/all", auth.verify, (req,res) => {
+router.get("/all", (req,res) => {
 	productController.getAllProduct().then(resultFromController => res.send(resultFromController))
 })
 
 // Get specific product
-router.get("/:productId", auth.verify, (req,res) => {
+router.get("/:productId", (req,res) => {
 	productController.getProduct(req.params).then(resultFromController => res.send (resultFromController))
 })
 
