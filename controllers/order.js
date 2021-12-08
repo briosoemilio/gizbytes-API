@@ -9,32 +9,119 @@ const mongoose = require("mongoose")
 //Add to cart
 
 module.exports.addToCart = async (data) => {
-	
-	let productDetails = await Product.findById(data.params.productId, {price:1 , _id:0})
-	let stringify = JSON.stringify(productDetails)
-	let productPrice = stringify.replace(/\D/g,"")
 
-	let newOrder = new Order({
-		productName:data.body.productName,
-		productId: data.params.productId,
-		price: productPrice,
-		quantity: data.body.quantity,
-		totalAmount: productPrice*data.body.quantity,
-		purchasedBy: auth.decode(data.headers.authorization).email
+	console.log(`Routing works.`)
+
+	let loggedUser = auth.decode(data.headers.authorization).email
+	console.log(loggedUser)
+	let orderList = []
+	let newProduct = data.params.productId
+	console.log(newProduct)
+
+	let totalAmount = await Order.aggregate([
+		{$match: {purchasedBy: loggedUser}},
+	]).then ((orders) => {
+		orders.forEach((order) => {
+			console.log(order)
+			orderList.push(order)
+			console.log(orderList)
+		})
 	})
 
-	let createNew = newOrder.save().then((product, error) => {
-		User.findById(auth.decode(data.headers.authorization).id).then(buyer => {
-				buyer.orders.push({productId: product._id})
-				return buyer.save()
+	if (orderList.length == 0) {
+		console.log(`New product`)
+		let newOrder = new Order({
+			productName:data.body.productName,
+			productId: data.params.productId,
+			price: data.body.price,
+			quantity: data.body.quantity,
+			totalAmount: data.body.totalAmount,
+			purchasedBy: auth.decode(data.headers.authorization).email
 		})
 
-		if (error) {
-			return false
-		} else {
-			return true
+		return createNew = newOrder.save().then((product, error) => {
+			User.findById(auth.decode(data.headers.authorization).id).then(buyer => {
+					buyer.orders.push({productId: product._id})
+					return buyer.save()
+			})
+
+			if (error) {
+				return false
+			} else {
+				return true
+			}
+		})
+	} else {
+		let x = 0
+		orderList.forEach(item => {
+			if (item.productId == newProduct) {
+				//start of if statement
+				if(item.isPaid) {
+					let newOrder = new Order({
+						productName:data.body.productName,
+						productId: data.params.productId,
+						price: data.body.price,
+						quantity: data.body.quantity,
+						totalAmount: data.body.totalAmount,
+						purchasedBy: auth.decode(data.headers.authorization).email
+					})
+
+					let createNew = newOrder.save().then((product, error) => {
+						User.findById(auth.decode(data.headers.authorization).id).then(buyer => {
+								buyer.orders.push({productId: product._id})
+								return buyer.save()
+						})
+
+						if (error) {
+							return false
+						} else {
+							return true
+						}
+					})
+				}
+				//end of if statement
+				console.log(`Product existing in cart`)
+				let newQty = {
+					quantity: parseFloat(item.quantity) + parseFloat(data.body.quantity),
+					totalAmount: item.price*(parseFloat(item.quantity) + parseFloat(data.body.quantity))
+				}
+				Order.findByIdAndUpdate(item._id, newQty).then((order, error) => {
+					if(error) {
+						return false
+					} else {
+						return true
+					}
+				})
+				return true
+			}
+			x++;
+		})
+		console.log(`This is the number of forEach loops: ${x}`)
+		if (x == orderList.length) {
+			console.log(`Product not exist in cart`)
+			let newOrder = new Order({
+				productName:data.body.productName,
+				productId: data.params.productId,
+				price: data.body.price,
+				quantity: data.body.quantity,
+				totalAmount: data.body.totalAmount,
+				purchasedBy: auth.decode(data.headers.authorization).email
+			})
+
+			let createNew = newOrder.save().then((product, error) => {
+				User.findById(auth.decode(data.headers.authorization).id).then(buyer => {
+						buyer.orders.push({productId: product._id})
+						return buyer.save()
+				})
+
+				if (error) {
+					return false
+				} else {
+					return true
+				}
+			})
 		}
-	})
+	}
 }
 
 // Get cart
@@ -53,69 +140,98 @@ module.exports.getCart = async (data) => {
 	})
 
 	return orderList
-
-	/*let totalAmount = await Order.aggregate([
-		{$match: {purchasedBy: loggedUser}},
-		{$group: {_id: loggedUser, total:{$sum: "$totalAmount"}}}
-	])
-
-	return totalAmount*/
 }
 
 // Check out Cart
 module.exports.checkOut = async (data) => {
-
-	return data;
+	let loggedUser = auth.decode(data.headers.authorization).email
 	
-	/*let loggedUser = auth.decode(data.headers.authorization).email
+	let orderList = []
 
-	let isStockSubtracted = await Order.aggregate([
-			{$match: {purchasedBy: loggedUser}}
-		]).then((orders => {
-			orders.forEach((order) => {
-				let productId = order.productId
-				let quantity = order.quantity
-				let orderId = order._id
-				let isPaid = order.isPaid
-				
-				Product.findById(productId).then((products => {
-					// Check if product stocks is gte order quantity
-					if (products.stocks >= quantity) {
+	let totalAmount = await Order.aggregate([
+		{$match: {purchasedBy: loggedUser}},
+	]).then ((orders) => {
+		orders.forEach((order) => {
+			orderList.push(order)
+		})
+	})
 
-						// Make order isPaid to true
-						let paidified = {
-							isPaid: true
-						}
-						Order.findByIdAndUpdate(orderId, paidified).then((order, error) => {
-							if (error) {
-								return false
-							} else {
-								return true
-							}
-						})
+	let paidify = {
+		isPaid: true
+	}
 
-						// Subtract order quantity to product stocks
-						let updatedStocks = {
-							stocks: products.stocks - quantity
-						}
+	let checkOutIndex = data.body.selectedIndex
+	checkOutIndex.forEach(async (item) => {
+		await Order.findByIdAndUpdate(orderList[item]._id, paidify).then((order, error) =>{
+			if (error) {
+				return false
+			} else {
+				return true
+			}
+		})
 
-						Product.findByIdAndUpdate(productId, updatedStocks).then((updateProduct, err) => {
-							if (err) {
-								return false
-							} else {
-								return true
-							}
-						})
+		let productStocks; 
 
-						res.send(`Success you have bought ${quantity} pcs of product: ${productId}`)
-						return true
-					} else {
-						res.send(`Error: no more stocks for product: ${productId}`)
-						return false
-					}
-				}))
-			})
-		}))		*/
+		let x = await Product.findOne({_id: orderList[item].productId}).then((product => {
+			productStocks = product.stocks;
+		}))
+		
+		let subtractify = {
+			stocks: productStocks - orderList[item].quantity
+		}
+
+
+		await Product.findByIdAndUpdate(orderList[item].productId, subtractify).then((newProduct, err) => {
+			if (err) {
+				return false
+			} else {
+				return true
+			}
+		})
+	})
+}
+
+// Remove product from cart
+module.exports.removeProduct = async (data) => {
+	let loggedUser = auth.decode(data.headers.authorization).email
+	
+	let orderList = []
+
+	let totalAmount = await Order.aggregate([
+		{$match: {purchasedBy: loggedUser}},
+	]).then ((orders) => {
+		orders.forEach((order) => {
+			orderList.push(order)
+		})
+	})
+
+	let removeIndex = data.body.selectedIndex
+	return removeIndex.map(index => {
+		Order.findOneAndDelete({_id: orderList[index]._id}).then((del, err) => {
+			if (err) {
+				return false
+			} else {
+				return true
+			}
+		})
+	})
+}
+
+module.exports.updateCart = async (data) => {
+	let loggedUser = auth.decode(data.headers.authorization).email
+	
+	let orderList = []
+
+	let totalAmount = await Order.aggregate([
+		{$match: {purchasedBy: loggedUser}},
+	]).then ((orders) => {
+		orders.forEach((order) => {
+			orderList.push(order)
+		})
+	})
+
+	let updateIndex = data.body.selectedIndex
+	let newQuantity = data.body.selectedIndex
 }
 
 //Retrieve all Orders

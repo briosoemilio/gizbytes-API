@@ -31,18 +31,38 @@ router.get("/myOrders", auth.verify, (req,res) => {
 })
 
 // Check out Cart
-
 router.post("/myOrders/checkOut", auth.verify, (req,res) => {
 	let isAdmin = auth.decode(req.headers.authorization).isAdmin
 
 	if (isAdmin) {
-		res.send(`User is Admin, Admin users do not have any orders. Please use non-admin account.`)
+		res.send(false)
 	} else {
-		let orders;
-		orderController.getCart(req).then(resultFromController =>{
-			orders = resultFromController
-			orderController.checkOut(orders).then(result => res.send result)
-		})
+		orderController.checkOut(req)
+		res.send(true)
+	}
+})
+
+// Remove product from Cart
+router.post("/myOrders/remove", auth.verify, (req,res) => {
+	let isAdmin = auth.decode(req.headers.authorization).isAdmin
+
+	if (isAdmin) {
+		res.send(false)
+	} else {
+		orderController.removeProduct(req)
+		res.send(true)
+	}
+})
+
+//Change quantity in cart
+router.post("/myOrders/update", auth.verify, (req,res) => {
+	let isAdmin = auth.decode(req.headers.authorization).isAdmin
+
+	if (isAdmin) {
+		res.send(false)
+	} else {
+		orderController.updateCart(req)
+		res.send(true)
 	}
 })
 
