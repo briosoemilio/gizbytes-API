@@ -157,7 +157,8 @@ module.exports.checkOut = async (data) => {
 	})
 
 	let paidify = {
-		isPaid: true
+		isPaid: true,
+		purchasedOn: new Date()
 	}
 
 	let checkOutIndex = data.body.selectedIndex
@@ -231,7 +232,19 @@ module.exports.updateCart = async (data) => {
 	})
 
 	let updateIndex = data.body.selectedIndex
-	let newQuantity = data.body.selectedIndex
+	let newQuantity = data.body.newQuantity
+
+	let updatify = {
+		quantity: newQuantity
+	}
+
+	await Order.findByIdAndUpdate(orderList[updateIndex[0]], updatify).then((newQty, err) => {
+		if (err) {
+			return false
+		} else {
+			return true
+		}
+	})
 }
 
 //Retrieve all Orders
