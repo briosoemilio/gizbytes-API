@@ -44,7 +44,7 @@ router.post("/:productId/update", auth.verify, (req,res) => {
 })
 
 // archive product
-router.post("/:productId/archive", auth.verify, (req,res) => {
+router.post("/archive", auth.verify, (req,res) => {
 	let isAdmin = auth.decode(req.headers.authorization).isAdmin
 
 	if (isAdmin) {

@@ -67,17 +67,18 @@ module.exports.updateProduct = (req) => {
 // Archive a specific product
 module.exports.archiveProduct = (req) => {
 	console.log(req.body.isActive)
-	/*let archivify = {
+	let productId = req.body.productId
+	let archivify = {
 		isActive: req.body.isActive
 	}
 	
-	return Product.findByIdAndUpdate(req.productId, archivify).then((product, error) => {
+	return Product.findByIdAndUpdate(productId, archivify).then((product, error) => {
 		if(error) {
 			return false
 		} else {
 			return true
 		}
-	})*/
+	})
 }
 
 // test upload
