@@ -37,7 +37,8 @@ router.post("/:productId/update", auth.verify, (req,res) => {
 	let isAdmin = auth.decode(req.headers.authorization).isAdmin
 
 	if (isAdmin) {
-		productController.updateProduct(req).then(resultFromController => {res.send(`You have successfully updated this product.`)})
+		productController.updateProduct(req)
+		res.send(true)
 	} else {
 		res.send(`Only admins are allowed to update a product.`)
 	}

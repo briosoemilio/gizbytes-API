@@ -51,6 +51,9 @@ module.exports.getProduct = (reqParams) => {
 
 // Update a specific product
 module.exports.updateProduct = (req) => {
+	
+	console.log(req.params.productId)
+
 	let updatedProduct = {
 		productName: req.body.productName,
 		description: req.body.description,
@@ -61,7 +64,13 @@ module.exports.updateProduct = (req) => {
 		updatedOn: new Date()
 	}
 
-	return Product.findByIdAndUpdate(req.params.productId, updatedProduct)
+	return Product.findByIdAndUpdate(req.params.productId, updatedProduct).then((product, error) => {
+		if (error) {
+			return false
+		} else {
+			return true
+		}
+	})
 }
 
 // Archive a specific product
