@@ -48,8 +48,8 @@ router.post("/:productId/archive", auth.verify, (req,res) => {
 	let isAdmin = auth.decode(req.headers.authorization).isAdmin
 
 	if (isAdmin) {
-		productController.archiveProduct(req.params)
-		res.send(`You have successfully archived this product.`)
+		productController.archiveProduct(req)
+		res.send(true)
 	} else {
 		res.send(`Only admins are allowed to archive a product.`)
 	}

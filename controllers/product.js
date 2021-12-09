@@ -57,6 +57,7 @@ module.exports.updateProduct = (req) => {
 		price: req.body.price,
 		stocks: req.body.stocks,
 		updatedBy: auth.decode(req.headers.authorization).email,
+		isActive: req.body.isActive,
 		updatedOn: new Date()
 	}
 
@@ -65,8 +66,9 @@ module.exports.updateProduct = (req) => {
 
 // Archive a specific product
 module.exports.archiveProduct = (req) => {
-	let archivify = {
-		isActive: false
+	console.log(req.body.isActive)
+	/*let archivify = {
+		isActive: req.body.isActive
 	}
 	
 	return Product.findByIdAndUpdate(req.productId, archivify).then((product, error) => {
@@ -75,7 +77,7 @@ module.exports.archiveProduct = (req) => {
 		} else {
 			return true
 		}
-	})
+	})*/
 }
 
 // test upload
