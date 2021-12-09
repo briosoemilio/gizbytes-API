@@ -31,8 +31,17 @@ const fs = require('fs')
 }*/
 
 // Get all active products
-module.exports.getAllProduct = () => {
+module.exports.getAllActiveProduct = () => {
 	return Product.find({isActive: true})
+}
+
+// Get ALL products
+module.exports.getAllProduct = () => {
+	let allProducts = Product.aggregate([
+			{$match: {}}
+		])
+
+	return allProducts
 }
 
 // Get specific product
