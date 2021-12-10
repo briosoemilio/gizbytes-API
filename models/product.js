@@ -16,9 +16,22 @@ const productSchema = new mongoose.Schema({
 		type: Number,
 		required: [true, "Product price is required."]
 	},
+	brand: {
+		type: String,
+		required: [true, "Product brand is required."]
+	},
+	reviews: {
+		type: Number
+	},
 	isActive: {
 		type: Boolean,
 		default: true
+	},
+	productImage1: {
+	  type: String,
+	},
+	productImage2: {
+	  type: String,
 	},
 	addedBy: {
 		type: String,
@@ -34,20 +47,6 @@ const productSchema = new mongoose.Schema({
 		type: Date,
 		default: new Date()
 	},
-	filename : {
-        type : String,
-        unique : true,
-        required: true
-    },
-    contentType : {
-        type: String,
-        required : true
-    },
-    imageBase64 : {
-        type : String,
-        required: true
-    },
-
-})
+});
 
 module.exports = mongoose.model('Product', productSchema)

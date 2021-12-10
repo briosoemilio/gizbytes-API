@@ -1,21 +1,56 @@
 const express = require("express");
 const router = express.Router();
 const productController = require("../controllers/product")
-const auth = require("../auth")
-const store = require('../multer')
+const auth = require("../auth");
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1024 * 1024 * 5 },
+  fileFilter: fileFilter,
+});
+
 
 // Add a product
-/*router.post("/add", auth.verify, store.array('images, 12'), productController.uploads, (req,res) => {
-	let isAdmin = auth.decode(req.headers.authorization).isAdmin
-	let newProduct = req.body.productName
-
-	if (isAdmin) {
-		productController.createProduct(req);
-		res.send(true)
-	} else {
-		res.send(false)
-	}
-})*/
+router.post(
+  "/add",
+  upload.fields([
+    { name: "productImage1", maxCount: 1 },
+    { name: "productImage2", maxCount: 1 },
+  ]),
+  (req, res) => {
+    console.log(req.files);
+    const productImage1 = req.files.productImage1[0];
+    const productImage2 = req.files.productImage2[0];
+    console.log(productImage1);
+    console.log(productImage2);
+    const userData = auth.decode(req.headers.authorization);
+    if (userData.isAdmin === true) {
+      productController
+        .createProduct(req.body, productImage1, productImage2, userData)
+        .then((resultFromController) => res.send(resultFromController));
+    } else {
+      res.send(false);
+    }
+  }
+);
 
 // Get all active products
 router.get("/allActive", (req,res) => {
@@ -55,20 +90,5 @@ router.post("/archive", auth.verify, (req,res) => {
 		res.send(`Only admins are allowed to archive a product.`)
 	}
 })
-
-//upload photo
-/*router.post("/upload", store.array('images, 12'), productController.uploads)*/
-
-//test upload
-router.post("/add", auth.verify, store.array('images', 12), (req,res) => {
-	let isAdmin = auth.decode(req.headers.authorization).isAdmin
-	
-	if (isAdmin) {
-		productController.createProduct(req).then(resultFromController => res.send(resultFromController))
-	} else {
-		res.send(false)
-	}
-})
-
 
 module.exports = router
