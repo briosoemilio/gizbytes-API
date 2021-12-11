@@ -98,4 +98,16 @@ router.get("/allOrders/pending", auth.verify, (req,res) => {
 		res.send(`None admin users cannot access this page.`)
 	}
 })
+
+//Search Current Orders
+router.post("/allOrders/specific", auth.verify, (req,res)=> {
+	let isAdmin = auth.decode(req.headers.authorization).isAdmin
+
+	if (isAdmin) {
+		orderController.getSpecificOrder(req).then(resultFromController => res.send(resultFromController))
+	} else {
+		res.send(`None admin users cannot access this page.`)
+	}
+})
+
 module.exports = router

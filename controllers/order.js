@@ -273,3 +273,28 @@ module.exports.getAllPendingOrders = (data) => {
 
 	return allPendingOrders
 }
+
+//Retrieve specific orders
+module.exports.getSpecificOrder = (data) => {
+	
+	let searchParam = data.body.searchParam
+	let search = data.body.search
+
+	let getSpecificOrder
+
+	if (searchParam == "productId") {
+		return getSpecificOrder = Order.aggregate([
+				{$match: {productId: search}}
+			])	
+	} else if (searchParam == "purchasedBy") {
+		return getSpecificOrder = Order.aggregate([
+				{$match: {purchasedBy: search}}
+			])
+	} else if (searchParam == "._id") {
+		const ObjectId = require('mongoose').Types.ObjectId
+		return getSpecificOrder = Order.aggregate([
+				{$match: {_id: ObjectId(`${search}`)}}
+			])
+	}
+	
+}

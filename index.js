@@ -14,6 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
 
+app.use("/uploads", express.static("uploads"));
+
 mongoose.connect("mongodb+srv://admin:8260560aw@zuittbootcamp.3f2rk.mongodb.net/e-commerce?retryWrites=true&w=majority" , {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
