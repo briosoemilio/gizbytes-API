@@ -3,6 +3,17 @@ const router = express.Router();
 const userController = require("../controllers/user")
 const auth = require("../auth")
 
+// Set admin
+router.post("/setAdminUser", auth.verify, (req, res) => {
+	let isAdmin = auth.decode(req.headers.authorization).isAdmin
+	
+		if (isAdmin) {
+			userController.setAdmin(req)
+			res.send(true)			
+		} else {
+			res.send(false)
+		}
+});
 
 // Register
 router.post("/register", (req,res) => {
@@ -38,26 +49,56 @@ router.get("/all", auth.verify, (req,res) => {
 	}
 });
 
+//Get customer users
+router.get("/customers", auth.verify, (req,res) => {
+
+	let isAdmin = auth.decode(req.headers.authorization).isAdmin
+
+	if (isAdmin) {
+		userController.getCustomerUsers(req).then(resultFromController => res.send(resultFromController))
+	} else {
+		res.send(`Please use Admin user only.`)
+	}
+});
+
+//Get pending admin users
+router.get("/pendingAdmins", auth.verify, (req,res) => {
+
+	let isAdmin = auth.decode(req.headers.authorization).isAdmin
+
+	if (isAdmin) {
+		userController.getPendingAdminUser(req).then(resultFromController => res.send(resultFromController))
+	} else {
+		res.send(`Please use Admin user only.`)
+	}
+});
+
+//Get admin users
+router.get("/admins", auth.verify, (req,res) => {
+
+	let isAdmin = auth.decode(req.headers.authorization).isAdmin
+
+	if (isAdmin) {
+		userController.getAdminUser(req).then(resultFromController => res.send(resultFromController))
+	} else {
+		res.send(`Please use Admin user only.`)
+	}
+});
+
+//Search Current users
+router.post("/specific", auth.verify, (req,res)=> {
+	let isAdmin = auth.decode(req.headers.authorization).isAdmin
+
+	if (isAdmin) {
+		userController.getSpecificUser(req).then(resultFromController => res.send(resultFromController))
+	} else {
+		res.send(`None admin users cannot access this page.`)
+	}
+})
+
 // Get specific user
 router.get("/:userId", auth.verify, (req,res) => {
 	userController.getUser(req.params).then(resultFromController => res.send(resultFromController))
-});
-
-// Set admin
-router.put("/:userId/setadmin/", auth.verify, (req, res) => {
-	let isAdmin = auth.decode(req.headers.authorization).isAdmin
-	
-	userController.getUser(req.params).then(resultFromController => {
-		let newAdmin = resultFromController.email
-	
-		if (isAdmin) {
-			userController.setAdmin(req.params)
-			res.send(`You have set user: ${newAdmin} as a new admin.`)
-			
-		} else {
-			res.send(`User is not admin. Cannot set other users as admin.`)
-		}
-	})
 });
 
 module.exports = router

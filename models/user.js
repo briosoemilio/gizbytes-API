@@ -52,9 +52,12 @@ const userSchema = new mongoose.Schema ({
 			type: String,
 			required: [true, 'Product ID is required.']
 		}
-	}]
+	}],
 
-
+	joinAdmin: {
+		type: Boolean
+	}
+	
 })
 
 module.exports = mongoose.model('User', userSchema)

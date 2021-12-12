@@ -1,6 +1,7 @@
 const User = require("../models/user")
 const bcrypt = require("bcrypt")
 const auth = require("../auth")
+const mongoose = require("mongoose")
 
 
 // Register
@@ -21,7 +22,8 @@ module.exports.registerUser = (reqBody) => {
 		password: bcrypt.hashSync(reqBody.password, 10),
 		firstName: reqBody.firstName,
 		lastName: reqBody.lastName,
-		mobileNo: reqBody.mobileNo
+		mobileNo: reqBody.mobileNo,
+		joinAdmin: reqBody.joinAdmin
 	})
 
 	return newUser.save().then((user, error) => {
@@ -52,7 +54,11 @@ module.exports.loginUser = (reqBody) => {
 
 // Get all users
 module.exports.getAllUsers = (reqBody) => {
-	return User.find({})
+	let allUsers = User.aggregate([
+			{$match: {}}
+		])
+
+	return allUsers
 }
 
 // Get a specific user
@@ -62,12 +68,14 @@ module.exports.getUser = (reqBody) => {
 
 // Set user as admin
 
-module.exports.setAdmin = (reqParams) => {
+module.exports.setAdmin = (req) => {
 	let adminified = {
-		isAdmin: true
+		isAdmin: true,
+		joinAdmin: false
 	}
+	console.log(req.body.user)
 
-	return User.findByIdAndUpdate(reqParams.userId, adminified).then((course, error) => {
+	return User.findByIdAndUpdate(req.body.user, adminified).then((user, error) => {
 		if(error) {
 			return false
 		} else {
@@ -84,3 +92,51 @@ console.log(data)
 				return result;
 			});
 		};
+
+// Retrieve customer users
+module.exports.getCustomerUsers = (data) => {
+	let allCustomerUsers = User.aggregate([
+			{$match: {isAdmin:false}}
+		])
+
+	return allCustomerUsers
+}
+
+// Retrieve pending admin users
+module.exports.getPendingAdminUser = (data) => {
+	let allPendingAdminUsers = User.aggregate([
+			{$match: {joinAdmin:true}}
+		])
+
+	return allPendingAdminUsers
+}
+
+//Retrieve all admin users
+module.exports.getAdminUser = (data) => {
+	let allAdminUsers = User.aggregate([
+			{$match: {isAdmin:true}}
+		])
+
+	return allAdminUsers
+}
+
+//Retrieve specific orders
+module.exports.getSpecificUser = (data) => {
+	
+	let searchParam = data.body.searchParam
+	let search = data.body.search
+
+	let getSpecificUser
+
+	if (searchParam == "userEmail") {
+		return getSpecificUser = User.aggregate([
+				{$match: {email: search}}
+			])	
+	} else if (searchParam == "._id") {
+		const ObjectId = require('mongoose').Types.ObjectId
+		return getSpecificUser = User.aggregate([
+				{$match: {_id: ObjectId(`${search}`)}}
+			])
+	}
+	
+}
