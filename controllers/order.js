@@ -298,3 +298,14 @@ module.exports.getSpecificOrder = (data) => {
 	}
 	
 }
+
+//Get Hot Orders
+module.exports.getHotOrders = (data) => {
+	let hotOrdersId = Order.aggregate([
+			{$match: {isPaid:true}},
+			{$group: {_id: "$productId", count:{$sum: "$quantity"}}},
+			{$sort: {"count": -1}}
+		])
+
+	return hotOrdersId
+}

@@ -110,4 +110,9 @@ router.post("/allOrders/specific", auth.verify, (req,res)=> {
 	}
 })
 
+//Get hot orders
+router.get("/hotOrders", (req,res)=> {	
+	orderController.getHotOrders(req).then(resultFromController => res.send(resultFromController))
+})
+
 module.exports = router
